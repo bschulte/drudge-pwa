@@ -13,6 +13,7 @@
     "postcss-cli": "^6.1.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-js-pull-to-refresh": "^1.2.1",
     "react-scripts": "2.1.1",
     "typescript": "3.2.2"
   },
