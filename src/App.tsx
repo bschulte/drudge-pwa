@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
+import { ArticleListItem } from "./components/ArticleListItem";
 import { parsePage } from "./parsing/parse";
 
 interface IArticle {
@@ -22,7 +23,7 @@ class App extends Component<object, IAppState> {
   }
 
   componentDidMount = async () => {
-    let response;
+    let response: AxiosResponse;
     try {
       response = await axios.get(
         "http://192.168.55.18:5000/https://drudgereport.com",
@@ -50,11 +51,13 @@ class App extends Component<object, IAppState> {
 
     return (
       <div>
-        <ul>
-          {articles.map((article: IArticle) => (
-            <li>
-              <a href={article.url}>{article.text}</a>
-            </li>
+        <ul className="list-reset">
+          {articles.map((article: IArticle, index: number) => (
+            <ArticleListItem
+              key={index}
+              text={article.text}
+              url={article.url}
+            />
           ))}
         </ul>
       </div>
