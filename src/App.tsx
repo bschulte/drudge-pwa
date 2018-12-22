@@ -1,25 +1,62 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import axios from "axios";
 
-class App extends Component {
+import { parsePage } from "./parsing/parse";
+
+interface IArticle {
+  text: string;
+  url: string;
+}
+
+interface IAppState {
+  articles: IArticle[];
+}
+
+class App extends Component<object, IAppState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      articles: []
+    };
+  }
+
+  componentDidMount = async () => {
+    let response;
+    try {
+      response = await axios.get(
+        "http://192.168.55.18:5000/https://drudgereport.com",
+        {
+          headers: {
+            "x-requested-with": "test-drudge.com"
+          }
+        }
+      );
+      console.log("Response:", response);
+    } catch (err) {
+      console.log("Err:", JSON.stringify(err));
+      return;
+    }
+
+    const linkData = parsePage(response.data);
+    this.setState({ articles: linkData });
+  };
+
   render() {
+    const { articles } = this.state;
+    if (articles.length === 0) {
+      return "Loading...";
+    }
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <ul>
+          {articles.map((article: IArticle) => (
+            <li>
+              <a href={article.url}>{article.text}</a>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
