@@ -26,7 +26,7 @@ class App extends Component<object, IAppState> {
     let response: AxiosResponse;
     try {
       response = await axios.get(
-        "http://192.168.55.18:5000/https://drudgereport.com",
+        "http://proxy.cromox.org/https://drudgereport.com",
         {
           headers: {
             "x-requested-with": "test-drudge.com"
