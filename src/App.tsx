@@ -45,7 +45,6 @@ class App extends Component<object, IAppState> {
             }
           }
         );
-        console.log("Response:", response);
       } catch (err) {
         console.log("Err:", JSON.stringify(err));
         reject();

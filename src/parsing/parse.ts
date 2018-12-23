@@ -19,7 +19,6 @@ export const parsePage = (html: string) => {
   const $ = cheerio.load(html);
 
   const links = $("a");
-  console.log("links:", links);
 
   // Go through the links and extract the text
   const linkData: any[] = [];
@@ -37,13 +36,9 @@ export const parsePage = (html: string) => {
       const text = $(this).text();
       if (isOkLinkText(text)) {
         linkData.push({ url, text });
-      } else {
-        console.log("Ignoring: ", text);
       }
     }
   });
-
-  console.log("Link data:", linkData);
 
   return linkData;
 };
